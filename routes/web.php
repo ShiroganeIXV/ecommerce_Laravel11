@@ -4,9 +4,12 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+route::get('/',[HomeController::class,'home']); // controller name and method name
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

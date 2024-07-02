@@ -9,9 +9,8 @@
     <h1>Admin</h1>
      <!-- Authentication -->
      <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <input type="submit" value="Logout">
-                </form>
+        @csrf
+        <input type="submit" value="Logout">
+    </form>
 </body>
 </html>
