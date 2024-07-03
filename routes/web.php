@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -24,3 +25,5 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('admin/dashboard',[HomeController::class,'index'])->middleware(['auth','admin']);   // check if user is login and is admin
+
+Route::get('view_category',[AdminController::class,'view_category'])->middleware(['auth','admin']);   

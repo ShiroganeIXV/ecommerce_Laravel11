@@ -2,6 +2,22 @@
 <html>
   <head> 
     @include('admin.css')
+
+    <style>
+        input[type='text']{
+            width: 400px;
+            height: 50px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        .div_design{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
   </head>
   <body>
     <!-- Header section  -->
@@ -11,11 +27,23 @@
     <!-- Sidebar Navigation -->
     @include('admin.sidebar')
     <!-- Sidebar Navigation end-->
+
+
       <div class="page-content">
         <div class="page-header">
           <div class="container-fluid">
+          <h1>Add category</h1>
+            <div class="div_design">
+                
+                <form action="">
+                    <div >
+                        <input type="text" name="category">
+                        <input class="btn btn-primary" type="submit" value="Add Category">
+                    </div>
+                </form>
+            </div>
+          
             
-            @include('admin.body')
 
       </div>
     </div>
