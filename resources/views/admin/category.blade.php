@@ -71,11 +71,20 @@
               <table class="table_deg">
                 <tr>
                   <th>Category Name</th>
+                  <th>Delete</th>
                 </tr>
 
                 @foreach($data as $datum)
                 <tr>
                   <td>{{ucwords($datum->category_name)}}</td>
+                  <td>
+                    <!-- <a class="btn btn-danger" href="{{url('delete_category',$datum->id)}}">Delete</a> -->
+                    <form action="/delete_category/{{ $datum->id }}" method="POST">
+                      @csrf
+                      @method('DELETE')
+                      <button class="btn btn-danger delete-category" data-category-id="{{ $datum->id }} type="submit" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
+                    </form>
+                  </td> <!-- get the id of the category and pass it to the url -->
                 </tr>
                 @endforeach
 
@@ -95,5 +104,7 @@
     <script src="{{asset('admincss/vendor/jquery-validation/jquery.validate.min.js')}}"></script>
     <script src="{{asset('admincss/js/charts-home.js')}}"></script>
     <script src="{{asset('admincss/js/front.js')}}"></script>
+
+    
   </body>
 </html>

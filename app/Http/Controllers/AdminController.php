@@ -13,6 +13,7 @@ class AdminController extends Controller
         return view('admin.category',compact('data'));
     }
 
+    //? add category
     public function add_category(Request $request){ // post method will need a request object
         // TODO use Category Model
          // Use firstOrCreate to check if the category exists before creating a new one
@@ -32,5 +33,14 @@ class AdminController extends Controller
 
         return redirect()->back(); // redirect back to the previous page
         
+    }
+
+    //? delete category
+    public function delete_category($id){
+        // TODO use Category Model
+        $category = Category::find($id); // find the category by id. method provided by Laravel Eloquent ORM
+        $category->delete(); // delete the category
+        toastr()->timeout(10000)->closeButton()->warning('Category deleted successfully'); // show a success message
+        return redirect()->back(); // redirect back to the previous page
     }
 }
