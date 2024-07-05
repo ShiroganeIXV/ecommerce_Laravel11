@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Flasher\Toastr\Prime\ToastrInterface;
 
@@ -59,6 +60,48 @@ class AdminController extends Controller
         $category->save(); // save the updated category
         toastr()->timeout(10000)->closeButton()->success('Category updated successfully'); // show a success message
         return redirect('/view_category'); // redirect to the view_category route
+    }
+
+    //? add product
+    public function add_product(){
+        $categories = Category::all(); // get all the categories
+
+        return view('admin.add_product',compact('categories')); // compact: pass the 'categories' to the view
+    }
+
+    //? upload product
+    public function upload_product(Request $request){ // post method will need a request object
+        $product = new Product(); // create a new Product object
+
+        // Check if a product with the given name already exists
+        $productExists = Product::where('title', $request->product_name)->exists();
+
+        if ($productExists) {
+            // If the product exists, redirect back with an error message
+            toastr()->timeout(10000)->closeButton()->error('Product name already exists');
+            return back()->with('error', 'Product name already exists.');
+        }
+
+
+    // Database field    =    // Form field
+        $product->title = $request->product_name; 
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->qty;
+        $product->category = $request->category;
+
+    
+        // check if the product image is uploaded
+        $image = $request->file('image');
+        if($image){
+            $imageName = time().'.'.$image->getClientOriginalExtension(); // generate a unique name for the image
+            $image->move(public_path('products'), $imageName); // move the image to the public/products folder
+            $product->image = $imageName; // save the image name to the product object
+        }
+
+        $product->save(); // save the product
+        toastr()->timeout(10000)->closeButton()->success('Product added successfully'); // show a success message
+        return redirect()->back(); // redirect back to the previous page
     }
 
 }
