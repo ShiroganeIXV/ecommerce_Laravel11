@@ -16,6 +16,29 @@
             justify-content: center;
             align-items: center;
         }
+
+        .table_deg{
+          text-align: center ;
+          margin: auto;
+          border: 2px solid skyblue;
+          margin-top: 50px;
+          width: 30%;
+
+        }
+
+        th{
+          background-color: skyblue;
+          padding: 15px;
+          font-size: 20px;
+          font-weight: bold;
+          color: white;
+        }
+
+        td{
+          color: white;
+          padding: 10px;
+          border: 1px solid skyblue;
+        }
     </style>
 
   </head>
@@ -35,12 +58,28 @@
           <h1>Add category</h1>
             <div class="div_design">
                 
-                <form action="">
+                <form action="{{url('add_category')}}" method="post">
+                  @csrf
                     <div >
                         <input type="text" name="category">
                         <input class="btn btn-primary" type="submit" value="Add Category">
                     </div>
                 </form>
+            </div>
+
+            <div>
+              <table class="table_deg">
+                <tr>
+                  <th>Category Name</th>
+                </tr>
+
+                @foreach($data as $datum)
+                <tr>
+                  <td>{{ucwords($datum->category_name)}}</td>
+                </tr>
+                @endforeach
+
+              </table>
             </div>
           
             
