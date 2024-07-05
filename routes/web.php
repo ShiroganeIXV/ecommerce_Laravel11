@@ -34,3 +34,9 @@ Route::post('add_category',[AdminController::class,'add_category'])->middleware(
 // delete category
 // best practice is to Use DELETE method for deleting a category
 Route::delete('delete_category/{id}', [AdminController::class, 'delete_category'])->middleware(['auth', 'admin']);
+
+// edit category
+Route::get('edit_category/{id}', [AdminController::class, 'edit_category'])->middleware(['auth', 'admin']);
+
+// update category
+Route::post('update_category/{id}', [AdminController::class, 'update_category'])->middleware(['auth', 'admin']);

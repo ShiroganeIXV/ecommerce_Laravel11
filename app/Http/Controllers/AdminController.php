@@ -43,4 +43,22 @@ class AdminController extends Controller
         toastr()->timeout(10000)->closeButton()->warning('Category deleted successfully'); // show a success message
         return redirect()->back(); // redirect back to the previous page
     }
+
+    //? edit category
+    public function edit_category($id){
+        // TODO use Category Model
+        $data = Category::find($id); // find the category by id. method provided by Laravel Eloquent ORM
+        return view('admin.edit_category', compact('data')); // return the view with the category data
+    }
+
+    //? update category
+    public function update_category(Request $request, $id){
+        // TODO use Category Model
+        $category = Category::find($id); // find the category by id. method provided by Laravel Eloquent ORM
+        $category->category_name = $request->category; // update the category name
+        $category->save(); // save the updated category
+        toastr()->timeout(10000)->closeButton()->success('Category updated successfully'); // show a success message
+        return redirect('/view_category'); // redirect to the view_category route
+    }
+
 }
