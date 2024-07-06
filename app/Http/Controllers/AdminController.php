@@ -104,4 +104,10 @@ class AdminController extends Controller
         return redirect()->back(); // redirect back to the previous page
     }
 
+    //? view product
+    public function view_product(){
+        $products = Product::all(); // get all the data from the Product model - Laravel Eloquent ORM
+        return view('admin.view_products',compact('products'));
+    }
+
 }
