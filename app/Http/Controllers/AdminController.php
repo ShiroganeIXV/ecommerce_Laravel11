@@ -106,7 +106,7 @@ class AdminController extends Controller
 
     //? view product
     public function view_product(){
-        $products = Product::all(); // get all the data from the Product model - Laravel Eloquent ORM
+        $products = Product::Paginate(4); // get all the data from the Product model - Laravel Eloquent ORM
         return view('admin.view_products',compact('products'));
     }
 

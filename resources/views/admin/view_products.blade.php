@@ -2,6 +2,8 @@
 <html>
   <head> 
     @include('admin.css')
+    
+
     <style>
         input[type='text']{
             width: 400px;
@@ -33,7 +35,7 @@
           margin: auto;
           border: 2px solid skyblue;
           margin-top: 50px;
-          width: 60%;
+          width: 80%;
 
         }
 
@@ -60,7 +62,7 @@
 
         img{
           width: 100px;
-          height: 100px;
+          height: 130px;
         }
     </style>
   </head>
@@ -75,6 +77,7 @@
     <div class="page-content">
         <div class="page-header">
             <div class="container-fluid">
+                <h1>All Products</h1>
 
                 <div class="div_design">
                     <table class="table_design">
@@ -92,14 +95,21 @@
                             <td><h5>{{$product->title}}</h5></td>
                             <td>{{$product->description}}</td>
                             <td>{{$product->category}}</td>
-                            <td>{{$product->price}}</td>
+                            <td>${{$product->price}}</td>
                             <td>{{$product->quantity}}</td>
                             <td><img src="./products/{{$product->image}}" alt="{{$product->title}}"> </td>
 
                         </tr>
                         @endforeach
                     </table>
+                    
+               
                 </div>
+                <!-- //TODO Pagination -->
+                <div class="div_design">
+                    {{$products->onEachSide(1)->links()}}
+                </div>
+                
 
             
             </div>
@@ -115,5 +125,6 @@
     <script src="{{asset('admincss/vendor/jquery-validation/jquery.validate.min.js')}}"></script>
     <script src="{{asset('admincss/js/charts-home.js')}}"></script>
     <script src="{{asset('admincss/js/front.js')}}"></script>
+
   </body>
 </html>
