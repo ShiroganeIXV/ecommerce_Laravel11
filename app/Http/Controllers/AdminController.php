@@ -124,4 +124,35 @@ class AdminController extends Controller
         toastr()->timeout(10000)->closeButton()->warning('Product deleted successfully'); // show a success message
         return redirect()->back(); // redirect back to the previous page
     }
+
+    //? Update product
+    public function update_product($id){
+        $product = Product::find($id); // find the product by id. method provided by Laravel Eloquent ORM
+        $categories = Category::all(); // get all the categories
+        return view('admin.update_product',compact('product','categories')); // return the view with the product and categories data
+    }
+
+    //? Edit product
+    public function edit_product(Request $request, $id){
+        $product = Product::find($id); // find the product by id. method provided by Laravel Eloquent ORM
+
+        // Database field    =    // Form field
+        $product->title = $request->product_name; 
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->qty;
+        $product->category = $request->category;
+
+        // check if the product image is uploaded
+        $image = $request->file('image');
+        if($image){
+            $imageName = time().'.'.$image->getClientOriginalExtension(); // generate a unique name for the image
+            $image->move(public_path('products'), $imageName); // move the image to the public/products folder
+            $product->image = $imageName; // save the image name to the product object
+        }
+
+        $product->save(); // save the product
+        toastr()->timeout(10000)->closeButton()->success('Product updated successfully'); // show a success message
+        return redirect('/view_product'); // redirect to the view_product route
+    }
 }

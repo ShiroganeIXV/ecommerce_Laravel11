@@ -53,3 +53,9 @@ route::get('view_product',[AdminController::class,'view_product'])->middleware([
 // delete product
 // Route::get('delete_product/{id}', [AdminController::class, 'delete_product'])->middleware(['auth', 'admin']); // b/c does not use <form> tag hence use GET method
 Route::delete('delete_product/{id}', [AdminController::class, 'delete_product'])->middleware(['auth', 'admin']);
+
+// update product
+Route::get('update_product/{id}', [AdminController::class, 'update_product'])->middleware(['auth', 'admin']);
+
+// Edit product
+Route::post('edit_product/{id}', [AdminController::class, 'edit_product'])->middleware(['auth', 'admin']);
