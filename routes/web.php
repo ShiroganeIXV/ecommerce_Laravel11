@@ -49,3 +49,7 @@ Route::post('upload_product',[AdminController::class,'upload_product'])->middlew
 
 //view product
 route::get('view_product',[AdminController::class,'view_product'])->middleware(['auth','admin']);
+
+// delete product
+// Route::get('delete_product/{id}', [AdminController::class, 'delete_product'])->middleware(['auth', 'admin']); // b/c does not use <form> tag hence use GET method
+Route::delete('delete_product/{id}', [AdminController::class, 'delete_product'])->middleware(['auth', 'admin']);

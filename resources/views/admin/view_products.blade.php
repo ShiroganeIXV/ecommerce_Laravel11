@@ -64,6 +64,12 @@
           width: 100px;
           height: 130px;
         }
+
+ 
+
+
+
+        
     </style>
   </head>
   <body>
@@ -88,17 +94,29 @@
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Image</th>
+                            <th>Action</th>
                         </tr>
 
                         @foreach($products as $product)
                         <tr>
                             <td><h5>{{$product->title}}</h5></td>
-                            <td>{{$product->description}}</td>
+                            <td>{!!Str::limit($product->description,50)!!}</td>
                             <td>{{$product->category}}</td>
                             <td>${{$product->price}}</td>
                             <td>{{$product->quantity}}</td>
                             <td><img src="./products/{{$product->image}}" alt="{{$product->title}}"> </td>
-
+                            <td>
+                              <div style="display: flex; align-items: center; justify-content: center;">
+                                <button class="btn btn-success mr-3" href="">Edit</button>
+                                <!-- <a class="btn btn-danger" href="{{url('delete_product',$product->id)}}">Delete</a></td> -->
+                                <form action="/delete_product/{{ $product->id }}" method="POST"> <!--// HTML forms do not support the DELETE method directly. The @method('DELETE') directive is correctly used to spoof the DELETE method for Laravel to process it accordingly. -->
+                                  @csrf
+                                  @method('DELETE')
+                                  <button class="btn btn-danger " data-category-id="{{ $product->id }} type="submit" onclick="return confirm('Are you sure you want to PERMANENTLY delete this product?')">Delete</button>
+                                </form>
+                              </div>
+                              
+                            </td>
                         </tr>
                         @endforeach
                     </table>

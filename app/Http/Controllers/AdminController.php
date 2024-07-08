@@ -106,8 +106,22 @@ class AdminController extends Controller
 
     //? view product
     public function view_product(){
-        $products = Product::Paginate(4); // get all the data from the Product model - Laravel Eloquent ORM
+        $products = Product::Paginate(3); // get all the data from the Product model - Laravel Eloquent ORM
         return view('admin.view_products',compact('products'));
     }
 
+    //? delete product
+    public function delete_product($id){
+        $product = Product::find($id); // find the product by id. method provided by Laravel Eloquent ORM
+        
+        // Delete the image from the public folder
+        $image_path = public_path('products/'.$product->image); // get the image path
+        if(file_exists($image_path)){ // check if the image exists
+            unlink($image_path); // delete the image
+        }
+        
+        $product->delete(); // delete the product
+        toastr()->timeout(10000)->closeButton()->warning('Product deleted successfully'); // show a success message
+        return redirect()->back(); // redirect back to the previous page
+    }
 }

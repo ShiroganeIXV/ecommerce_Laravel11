@@ -1,6 +1,18 @@
+
 @if ($paginator->hasPages())
     <nav>
         <ul class="pagination">
+            {{-- First Page Link --}}
+            @if ($paginator->currentPage() > 1)
+                <li class="page-item">
+                    <a class="page-link" href="{{ $paginator->url(1) }}" rel="first" aria-label="@lang('pagination.first')">&laquo;</a>
+                </li>
+            @else
+                <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.first')">
+                    <span class="page-link" aria-hidden="true">&laquo;</span>
+                </li>
+            @endif
+
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
                 <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
@@ -18,7 +30,6 @@
                 @if (is_string($element))
                     <li class="page-item disabled" aria-disabled="true"><span class="page-link">{{ $element }}</span></li>
                 @endif
-
                 {{-- Array Of Links --}}
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
@@ -39,6 +50,17 @@
             @else
                 <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
                     <span class="page-link" aria-hidden="true">&rsaquo;</span>
+                </li>
+            @endif
+
+            {{-- Last Page Link --}}
+            @if ($paginator->currentPage() < $paginator->lastPage())
+                <li class="page-item">
+                    <a class="page-link" href="{{ $paginator->url($paginator->lastPage()) }}" rel="last" aria-label="@lang('pagination.last')">&raquo;</a>
+                </li>
+            @else
+                <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.last')">
+                    <span class="page-link" aria-hidden="true">&raquo;</span>
                 </li>
             @endif
         </ul>
