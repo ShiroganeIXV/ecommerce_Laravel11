@@ -106,7 +106,7 @@ class AdminController extends Controller
 
     //? view product
     public function view_product(){
-        $products = Product::Paginate(3); // get all the data from the Product model - Laravel Eloquent ORM
+        $products = Product::Paginate(4); // get all the data from the Product model - Laravel Eloquent ORM
         return view('admin.view_products',compact('products'));
     }
 
@@ -154,5 +154,14 @@ class AdminController extends Controller
         $product->save(); // save the product
         toastr()->timeout(10000)->closeButton()->success('Product updated successfully'); // show a success message
         return redirect('/view_product'); // redirect to the view_product route
+    }
+
+    //? search product
+    public function product_search(Request $request){
+        $search = $request->search; // get the search query
+        $products = Product::where('title','like','%'.$search.'%')
+        ->orWhere('category', 'like', '%' . $search . '%')
+        ->paginate(4); // search for products with the search query in the title
+        return view('admin.view_products',compact('products')); // return the view with the results data
     }
 }

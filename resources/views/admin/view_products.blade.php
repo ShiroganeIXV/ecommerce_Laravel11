@@ -27,7 +27,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 60px;
+            margin-top: 40px;
         }
 
         .table_design{
@@ -84,6 +84,15 @@
         <div class="page-header">
             <div class="container-fluid">
                 <h1>All Products</h1>
+                <div class="div_design">
+                  <form action="{{url('product_search')}}" method="GET">
+
+                    <input class="input_design" type="search" name="search" placeholder="Enter name or category">
+                    <input type="submit" class="btn btn-secondary" value="Search">
+                  
+                  </form>
+                </div>
+                
 
                 <div class="div_design">
                     <table class="table_design">
