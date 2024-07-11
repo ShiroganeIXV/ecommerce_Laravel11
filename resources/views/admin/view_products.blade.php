@@ -73,6 +73,7 @@
     </style>
   </head>
   <body>
+  
     <!-- Header section  -->
     @include('admin.header')
     <!-- Header section end -->
@@ -85,11 +86,14 @@
             <div class="container-fluid">
                 <h1>All Products</h1>
                 <div class="div_design">
-                  <form action="{{url('product_search')}}" method="GET">
-
-                    <input class="input_design" type="search" name="search" placeholder="Enter name or category">
-                    <input type="submit" class="btn btn-secondary" value="Search">
-                  
+                  <form action="{{ url('product_search') }}" method="GET">
+                      <input class="input_design" type="search" name="search" placeholder="Enter name or category" value="{{ $search ?? ' ' }} ">
+                      <input type="submit" class="btn btn-secondary" value="Search">
+                      <br>
+                      <label for="price_range">Price Range:</label>
+                      <span>0</span>
+                      <input type="range" id="price_range" name="price_range" min="0" max="1000" value="{{ $price_range ?? 1000 }}">
+                      <span id="priceValue">0</span>
                   </form>
                 </div>
                 
@@ -134,9 +138,10 @@
                 </div>
                 <!-- //TODO Pagination -->
                 <div class="div_design">
-                    {{$products->onEachSide(1)->links()}}
+                <!-- {{ $products->links() }} -->
+                {{ $products->appends(['search' => isset($search) ? $search : ' ', 'price_range' => isset($price_range) ? $price_range : '1000'])->links() }}
                 </div>
-                
+               
 
             
             </div>
@@ -153,5 +158,18 @@
     <script src="{{asset('admincss/js/charts-home.js')}}"></script>
     <script src="{{asset('admincss/js/front.js')}}"></script>
 
+  
+    <script>
+    // JavaScript to display the range value dynamically
+    const rangeInput = document.getElementById('price_range');
+    const valueDisplay = document.getElementById('priceValue');
+
+    rangeInput.addEventListener('input', function() {
+        valueDisplay.textContent = this.value;
+    });
+
+    // Initialize the display
+    valueDisplay.textContent = rangeInput.value;
+  </script>
   </body>
 </html>

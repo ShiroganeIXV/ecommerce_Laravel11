@@ -156,12 +156,23 @@ class AdminController extends Controller
         return redirect('/view_product'); // redirect to the view_product route
     }
 
-    //? search product
+   //? search product
     public function product_search(Request $request){
-        $search = $request->search; // get the search query
-        $products = Product::where('title','like','%'.$search.'%')
-        ->orWhere('category', 'like', '%' . $search . '%')
-        ->paginate(4); // search for products with the search query in the title
-        return view('admin.view_products',compact('products')); // return the view with the results data
+        // Set default values
+        $defaultSearch = '';
+        $defaultPriceRange = '1000'; // Default max price
+        // Retrieve query parameters or use default values
+        $search = $request->input('search', $defaultSearch);
+        $price_range = $request->input('price_range', $defaultPriceRange);
+
+        // Query to filter products based on search criteria and price range
+        $products = Product::where(function($query) use ($search) {
+            $query->where('title', 'like', '%' . $search . '%')
+                ->orWhere('category', 'like', '%' . $search . '%');
+        })
+        ->whereBetween('price', [0, $price_range])
+        ->paginate(4); // Apply pagination only after filtering
+        return view('admin.view_products', compact('products', 'search', 'price_range')); // return the view with the results data
     }
+
 }
