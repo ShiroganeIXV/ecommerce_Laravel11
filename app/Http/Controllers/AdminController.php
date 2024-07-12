@@ -146,6 +146,12 @@ class AdminController extends Controller
         // check if the product image is uploaded
         $image = $request->file('image');
         if($image){
+             // Delete the image from the public folder - Old image
+            $image_path = public_path('products/'.$product->image); // get the image path
+            if(file_exists($image_path)){ // check if the image exists
+                unlink($image_path); // delete the image
+            }
+            // Add new Image
             $imageName = time().'.'.$image->getClientOriginalExtension(); // generate a unique name for the image
             $image->move(public_path('products'), $imageName); // move the image to the public/products folder
             $product->image = $imageName; // save the image name to the product object
